@@ -19,6 +19,17 @@ while True:
 
     if results.multi_hand_landmarks:
         for handLms in results.multi_hand_landmarks:
+            for nb, lm in enumerate(handLms.landmark):
+                print(nb, lm)
+                h, w, c = img.shape
+                cx, cy = int(w*lm.x), int(h*lm.y)
+                print(nb, cx, cy)
+                cv2.putText(img, str(nb), (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
+                # if nb == 4:
+                #     cv2.circle(img, (cx, cy), 15, (0, 0, 0), -1)
+                # if nb == 20:
+                #     cv2.circle(img, (cx, cy), 15, (255, 0, 0), -1)
+
             mpDraw.draw_landmarks(img, handLms, mpHands.HAND_CONNECTIONS)
 
     cTime = time.time()
@@ -30,5 +41,5 @@ while True:
 
 
     cv2.imshow("Video", img)
-    if cv2.waitKey(1) == ord('q'):
+    if cv2.waitKey(0) == ord('q'):
         break
