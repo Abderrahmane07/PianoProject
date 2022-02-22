@@ -1,0 +1,84 @@
+# import cv2
+# import numpy as np
+# 
+# cam = cv2.VideoCapture(0)
+# while True:
+#     ret, frame = cam.read()
+#     #cv2.imshow('coco', frame)
+#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#     _, th1 = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+# 
+#     # This one converts anything before the threshold value to zero and leaves the remaining untouched
+#     _, th2 = cv2.threshold(gray, 127, 255, cv2.THRESH_TOZERO)  # Best so Far, even if we still need to play with the threshold
+# 
+#     # This one leaves the values before the threshold unchanged and after that it fixes them
+#     _, th3 = cv2.threshold(gray, 127, 255, cv2.THRESH_TRUNC)
+# 
+#     # This one is an adaptive threshold
+#     tha = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 101, 2)  # We get decent results with this one also
+# 
+#     cv2.imshow('gray', gray)
+#     cv2.imshow('thA', tha)
+#     # cv2.imshow('th1', th1)
+#     # cv2.imshow('th2', th2)
+#     # cv2.imshow('th3', th3)
+#     corners = cv2.goodFeaturesToTrack(gray, 40, 0.07, 20)
+#     corners = np.int0(corners)
+#     for corner in corners:
+#         x, y = corner.ravel()
+#         cv2.circle(frame, (x, y), 2, (255, 0, 0), -1)
+#     cv2.imshow('drawn', frame)
+#     corners2 = cv2.goodFeaturesToTrack(tha, 40, 0.07, 20)
+#     corners2 = np.int0(corners2)
+#     for corner in corners2:
+#         x, y = corner.ravel()
+#         cv2.circle(frame, (x, y), 2, (0, 0, 255), -1)
+#     cv2.imshow('drawn2', frame)
+# 
+# 
+#     if cv2.waitKey(1) == ord('q'):
+#         #print(frame)
+#         print(type(gray))
+#         break
+# 
+#
+
+
+############################
+# To save
+# import cv2
+# import numpy as np
+#
+# cam = cv2.VideoCapture(0)
+# while True:
+#     ret, frame = cam.read()
+#     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#
+#     cv2.imshow('gray', gray)
+#
+#     corners = cv2.goodFeaturesToTrack(gray, 40, 0.07, 20)
+#     corners = np.int0(corners)
+#     print(corners)
+#     print("########################")
+#     # corners.sort()
+#     corners = corners.flatten()
+#     corners1 = (len(corners)//2)*[0]
+#     for i in range(len(corners)//2):
+#         corners1[i] = [corners[2*i], corners[2*i+1]]
+#     print(corners1)
+#     corners1.sort()
+#     print("########################")
+#     print(corners1)
+#
+#     for corner in corners1:
+#         x, y = corner
+#         cv2.circle(frame, (x, y), 4, (255, 0, 0), -1)
+#     cv2.rectangle(frame, tuple(corners1[3]), tuple(corners1[4]), (0, 0, 255), 5)
+#     cv2.imshow('drawn', frame)
+#     if cv2.waitKey(0) == ord('q'):
+#         #print(frame)
+#         print(type(gray))
+#         break
+#
+#
+

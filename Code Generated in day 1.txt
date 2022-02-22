@@ -1,0 +1,191 @@
+# Accessing The Phone's Camera
+
+# import numpy as np
+# import cv2
+# 
+# 
+# class MobileCamera:
+#     def getVideo(self, camera):
+#         self.camera = camera
+#         cap = cv2.VideoCapture(self.camera)
+#         while True:
+#             ret, frame = cap.read()
+#             # cv2.imshow('test', frame)
+#             frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+#             cv2.imshow('test1', frame)
+# 
+#             if cv2.waitKey(1) == ord('q'):
+#                 break
+#         cap.release()
+#         cv2.destroyAllWindows()
+# 
+# 
+# cam = MobileCamera()
+# cam.getVideo("http://10.112.157.150:8080/video")
+
+
+
+
+
+
+
+
+# import numpy as np
+# import cv2
+#
+# cam = cv2.VideoCapture(0)
+# template = cv2.imread('assets/glasses.PNG', 0)
+# h, w = template.shape
+#
+#
+# while True:
+#     ret, frame = cam.read()
+#     #cv2.imshow('coco', frame)
+#     img2 = frame.copy()
+#     img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+#     result = cv2.matchTemplate(img2, template, cv2.TM_CCOEFF_NORMED)
+#     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+#     location = max_loc
+#     bottom_right = (location[0] + w, location[1] + h)
+#     cv2.rectangle(frame, location, bottom_right, (0, 0, 0), 5)
+#     cv2.imshow('momo', cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY))
+#
+#     if cv2.waitKey(1) == ord('q'):
+#         break
+#
+#
+
+
+
+
+
+
+
+
+
+
+## Detection of Templates
+
+# import cv2
+# import numpy as np
+#
+# img = cv2.imread('assets/piano.jfif', 0)
+# template = cv2.imread('assets/key.PNG', 0)
+# h, w = template.shape
+#
+# methods = [cv2.TM_CCOEFF, cv2.TM_CCOEFF_NORMED, cv2.TM_CCORR, cv2.TM_CCORR_NORMED, cv2.TM_SQDIFF, cv2.TM_SQDIFF_NORMED]
+#
+# for method in methods:
+#     img2 = img.copy()
+#
+#     result = cv2.matchTemplate(img2, template, method)
+#     min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+#     if method in [cv2.TM_SQDIFF, cv2.TM_SQDIFF_NORMED]:
+#         location = min_loc
+#     else:
+#         location = max_loc
+#
+#     bottom_right = (location[0]+w, location[1]+h)
+#     cv2.rectangle(img2, location, bottom_right, 255, 5)
+#     cv2.imshow('momo', img2)
+#     cv2.waitKey(0)
+
+
+
+
+# # To draw lines between each corner
+
+# import cv2
+# import numpy as np
+#
+#
+# img = cv2.imread('assets/piano.jfif')
+# gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#
+# # (Source Image, Number of Corners, Minimum Quality (0-1), Minimum Euclidean Distance Between 2 Corners)
+# corners = cv2.goodFeaturesToTrack(gray, 40, 0.07, 20)
+# corners = np.int0(corners)
+# print(corners)
+#
+# for corner in corners:
+#     x, y = corner.ravel()
+#     cv2.circle(img, (x, y), 2, (0, 0, 255), -1)
+#
+# # for i in range(len(corners)):
+# #     for j in range(i+1, len(corners)):
+# #         corner1 = tuple(corners[i][0])
+# #         corner2 = tuple(corners[j][0])
+# #         color = tuple(map(lambda x: int(x), np.random.randint(0, 255, size=3)))
+# #         cv2.line(img, corner1, corner2, color, 1)
+#
+# cv2.imshow('Coco', img)
+# cv2.waitKey(0)
+
+
+
+## Contains Color Picking, blue in this case
+
+# import cv2
+# import numpy as np
+#
+# my_cam = cv2.VideoCapture(0)
+# while True:
+#     retrieve, frame = my_cam.read()
+#     width = int(my_cam.get(3))
+#     height = int(my_cam.get(4))
+#
+#     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+#     lower_blue = np.array([90, 50, 50])
+#     upper_blue = np.array([130, 255, 255])
+#
+#     mask = cv2.inRange(hsv, lower_blue, upper_blue)
+#     result = cv2.bitwise_and(frame, frame, mask=mask)
+#
+#     cv2.imshow('Test', result)
+#     cv2.imshow('Mak', mask)
+#
+#     value = cv2.waitKey(50)
+#     if value & 0xFF == ord('q'):
+#         print(value)
+#         break
+
+
+
+
+
+
+## Contains line drawing
+
+# import cv2
+# import numpy as np
+#
+# my_cam = cv2.VideoCapture(0)
+# while True:
+#     retrieve, frame = my_cam.read()
+#     width = int(my_cam.get(3))
+#     height = int(my_cam.get(4))
+#
+#     # Line and Rectangle drawing
+#     # (Source image, Starting Pos, Ending Pos, Color, Thickness)
+#     cv2.line(frame, (0, 0), (width, height), (255, 0, 0), 5)
+#     cv2.line(frame, (width, 0), (0, height), (0, 0, 255), 5)
+#     cv2.rectangle(frame, (50, 50), (300, 300), (20, 50, 70), 5)
+#
+#     # image = np.zeros(frame.shape, np.uint8)
+#     # smaller_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+#     # image[:height//2, :width//2] = smaller_frame
+#     # image[height//2:, :width//2] = smaller_frame
+#     # image[:height//2, width//2:] = smaller_frame
+#     # image[height//2:, width//2:] = smaller_frame
+#
+#     cv2.imshow('Test', frame)
+#
+#     value = cv2.waitKey(50)
+#     if value & 0xFF == ord('q'):
+#         print(value)
+#         break
+#
+# # We might want to add these to release the resources
+# # my_cam.release()
+# # cv2.destroyAllWindows()
+
